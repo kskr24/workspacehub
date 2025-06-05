@@ -11,6 +11,6 @@ func RegisterRoutes() http.Handler {
 	r := chi.NewRouter()
 
 	r.Get("/users/{id}", handlers.GetUserByIDHandler)
-
+	r.Put("/users/{id}", handlers.UpdateUser)
 	return r
 }

@@ -2,18 +2,22 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
-	"os"
+
+	"github.com/kskr24/workspacehub/internal/config"
+	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
 
-func InitDB() error {
+func InitDB(cfg *config.Config) error {
 
-	dsn := os.Getenv("DATABASE_URL")
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		cfg.DBHost, cfg.DBPort, cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.DBSSLMode)
 
 	var err error
-	DB, err = sql.Open("postgres", dsn)
+	DB, err = sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatalf("Failed to open a DB: %v", err)
 	}

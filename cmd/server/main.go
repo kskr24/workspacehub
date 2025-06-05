@@ -10,18 +10,19 @@ import (
 )
 
 func main() {
-	config.LoadEnv()
+	cfg := config.LoadConfig()
 
-	err := db.InitDB()
+	err := db.InitDB(cfg)
 	if err != nil {
 		log.Fatalf("Failed to connect to db: %v", err)
 	}
 	defer db.DB.Close()
 
 	r := routes.RegisterRoutes()
-	log.Println("Server started at :8080")
+
 	err = http.ListenAndServe(":8080", r)
 	if err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
+	log.Println("Server started at :8080")
 }

@@ -4,8 +4,9 @@ import (
 	"database/sql"
 	"errors"
 
+
 	"github.com/kskr24/workspacehub/internal/db"
-	"github.com/kskr24/workspacehub/internal/model"
+	model "github.com/kskr24/workspacehub/internal/models"
 )
 
 func GetUserByID(id int64) (*model.User, error) {
@@ -21,4 +22,10 @@ func GetUserByID(id int64) (*model.User, error) {
 		return nil, err
 	}
 	return &user, nil
+}
+
+func UpdateUser(user *model.User) error {
+	_, err := db.DB.Exec(`
+	UPDATE users SET name = $1, email = $2 where id = $3`, user.Name, user.Email, user.ID)
+	return err
 }

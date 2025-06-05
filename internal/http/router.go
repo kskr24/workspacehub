@@ -9,7 +9,7 @@ import (
 func NewRouter() http.Handler {
 	r := chi.NewRouter()
 
-	r.Get("/heath", func(w http.ResponseWriter, r *http.Request){
+	r.Get("/heath", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	})
 	return r
